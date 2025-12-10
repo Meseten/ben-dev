@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, type Variants } from "framer-motion";
 import { 
   Github, Linkedin, Mail, Code2, Cpu, Globe, Moon, Sun, 
   ArrowUpRight, Database, Layers, Smartphone, Server, MapPin, 
@@ -128,7 +128,7 @@ const skills = [
   "Social Sciences", "Office Admin", "Technical Troubleshooting", "Git/GitHub"
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -138,7 +138,7 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -149,7 +149,6 @@ const itemVariants = {
     }
   }
 };
-
 
 const TypewriterTerminal = () => {
   const [lines, setLines] = useState<string[]>([]);
@@ -206,7 +205,7 @@ const TypewriterTerminal = () => {
         currentCharIndex = 0;
         currentText = "";
       }
-    }, 5);
+    }, 5); 
 
     return () => clearInterval(interval);
   }, []);
