@@ -385,7 +385,7 @@ export default function Home() {
             <GraduationCap className="text-cyan-500 mb-3" size={32} />
             <h3 className="font-bold text-lg">Education</h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">BS Computer Science</p>
-            <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">Cavite State University (2021-Present)</p>
+            <p className="text-xs text-slate-500 dark:text-slate-500 mt-1">Cavite State University (2023-Present)</p>
           </motion.div>
 
           <motion.div 
