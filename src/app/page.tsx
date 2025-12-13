@@ -117,7 +117,7 @@ const projects = [
   {
     title: "Local RAG System",
     role: "AI Engineer & Backend Developer",
-    subRoles: "Ordinances & Local Documents",
+    subRoles: "Government Ordinances & Local Documents",
     desc: "A Retrieval-Augmented Generation system for querying local ordinances and memos. Powered by local Ollama 3 (8B) or Mistral AI models to ensure data sovereignty.",
     tags: ["Ollama 3", "Mistral AI", "Python", "Local LLM", "RAG"],
     link: "#",
@@ -136,7 +136,7 @@ const projects = [
   },
   {
     title: "ARIA",
-    role: "Network Architect",
+    role: "Network Architect &  Network Simulation Engineer",
     subRoles: "Cisco Enterprise Simulation",
     desc: "Designed comprehensive network topologies for enterprise environments. Implemented OSPF routing, VLAN segmentation, and ACL policies.",
     tags: ["Cisco", "Packet Tracer", "VLAN/OSPF"],
