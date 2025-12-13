@@ -126,7 +126,7 @@ const projects = [
   },
   {
     title: "NextQue",
-    role: "Lead Developer",
+    role: "Lead Developer & Technical Lead",
     subRoles: "System Architect",
     desc: "A robust government queuing system designed to reduce wait times and improve public service efficiency. Features local SQLite database for offline reliability.",
     tags: ["Java", "SQLite", "Apache NetBeans"],
