@@ -149,7 +149,7 @@ const projects = [
     role: "Frontend & Logic Developer",
     subRoles: "Game Developer • Debugging Lead",
     desc: "A fast-paced 2D space shooter game built in Java. I led the frontend development, implemented core gameplay features, and managed debugging.",
-    tags: ["Java", "NetBeans", "Game Development"],
+    tags: ["Java", "Apache NetBeans", "Game Development"],
     link: "#",
     featured: false,
     highlight: false
