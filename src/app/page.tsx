@@ -196,7 +196,7 @@ function ResumeModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
             <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wide mb-1">Ben James Jocson Duag</h2>
             <div className="w-full overflow-x-auto scrollbar-hide">
                <p className="text-[10px] md:text-[11px] text-slate-700 whitespace-nowrap font-medium min-w-max px-2 mx-auto">
-                 Capt, J, Angeles St, &bull; Poblacion III (Caingin) &bull; Maragondon &bull; Cavite &bull; benjamesduag.edu@gmail.com &bull; 09938086885 / 09766075495
+                 Capt. J. Angeles St., &bull; Poblacion III (Caingin) &bull; Maragondon &bull; Cavite &bull; benjamesduag.edu@gmail.com &bull; 09938086885 / 09766075495
                </p>
             </div>
           </div>
