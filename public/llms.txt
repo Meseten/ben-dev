@@ -1,0 +1,27 @@
+# Ben James Duag, ben4dev
+
+Systems & applications developer in Cavite, Philippines. Computer Science student at Cavite State University Naic, graduating October 2027.
+
+## What Ben builds
+
+- Android apps with on-device AI. Gallry runs TensorFlow Lite models and a local RAG layer entirely on the phone.
+- Web platforms in Next.js, React, and TypeScript. AGWA Water Services runs in production for a real water district.
+- Open-source Python. krna is a bamboo-inspired optimization algorithm published on PyPI.
+- Government systems that run offline. PASADA and NextQue serve municipal offices with no internet dependency.
+- Civic tech volunteering with BetterGov.ph, #MentalHealthPH, PAHRA, and Pinas Forward.
+
+## Key links
+
+- Portfolio: https://ben4dev.vercel.app
+- GitHub: https://github.com/Meseten
+- PyPI profile: https://pypi.org/user/Reben/
+- LinkedIn: https://www.linkedin.com/in/ben-james-duag/
+- krna package: https://pypi.org/project/krna/
+
+## Project case studies
+
+Full case studies live at /projects/[slug] for krna, PASADA, Gallry, OS Scheduler Ultima, AGWA Water Services, Local RAG System, NextQue, and ARIA.
+
+## Contact
+
+benjamesduag.edu@gmail.com. Open to internships, junior developer roles, and freelance builds.
