@@ -34,7 +34,7 @@ export const EXPERIENCE: readonly Experience[] = [
   {
     role: "Amplifier",
     org: "BetterGov.ph",
-    date: "Nov 2025 – Present",
+    date: "Nov 2025 to Present",
     period: "Ongoing",
     type: "Volunteer",
     desc: "Support open-source civic-tech projects that push for transparency and better public service.",
@@ -44,7 +44,7 @@ export const EXPERIENCE: readonly Experience[] = [
   {
     role: "Support Staff Intern (GIP)",
     org: "Department of Labor and Employment",
-    date: "Nov 2025 – Dec 2025",
+    date: "Nov 2025 to Dec 2025",
     period: "2 mos",
     type: "Government Internship Program",
     desc: "Handled office administration, document support, and help-desk work at a national agency.",
@@ -53,20 +53,20 @@ export const EXPERIENCE: readonly Experience[] = [
   {
     role: "Resident Member",
     org: "Computer Science Student Organization",
-    date: "Sep 2025 – Present",
+    date: "Sep 2025 to Present",
     period: "Ongoing",
     type: "Student Org",
-    desc: "Active member of the Computer Science academic community at Cavite State University – Naic.",
+    desc: "Active member of the Computer Science academic community at Cavite State University Naic.",
     current: true,
   },
   {
     role: "Resident Member",
     org: "ICT Student Organization",
-    date: "Oct 2023 – Present",
-    period: "Ongoing",
+    date: "Oct 2023 to Sep 2025",
+    period: "1 yr 11 mos",
     type: "Student Org",
-    desc: "Helped run technical events and peer support in the ICT department.",
-    current: true,
+    desc: "Active member of the ICT academic community at Cavite State University Naic.",
+    current: false,
   },
   {
     role: "IT Team Lead",
@@ -80,7 +80,7 @@ export const EXPERIENCE: readonly Experience[] = [
   {
     role: "Advocate",
     org: "#MentalHealthPH",
-    date: "Apr 2022 – Present",
+    date: "Apr 2022 to Present",
     period: "Ongoing",
     type: "Advocacy",
     desc: "Promote mental health awareness through digital campaigns.",
@@ -89,7 +89,7 @@ export const EXPERIENCE: readonly Experience[] = [
   {
     role: "Advocate / Member",
     org: "Philippine Alliance of Human Rights Advocates",
-    date: "Apr 2022 – Present",
+    date: "Apr 2022 to Present",
     period: "Ongoing",
     type: "Advocacy",
     desc: "Join forums and campaigns on human rights education.",
@@ -98,7 +98,7 @@ export const EXPERIENCE: readonly Experience[] = [
   {
     role: "Ambassador",
     org: "Pinas Forward Digital Democracy & Development, Inc.",
-    date: "Jan 2021 – Present",
+    date: "Jan 2021 to Present",
     period: "Ongoing",
     type: "Advocacy",
     desc: "Run digital campaigns and community outreach for youth engagement.",
@@ -451,20 +451,20 @@ export const OPEN_SOURCE = [
 
 export const CERTIFICATIONS = [
   {
-    name: "2D Animation – Certificate of Competency 1",
+    name: "2D Animation, Certificate of Competency 1",
     issuer: "TESDA",
   },
 ] as const;
 
 export const EDUCATION = [
   {
-    school: "Cavite State University – Naic",
+    school: "Cavite State University Naic",
     degree: "BS Computer Science",
-    date: "2023 – Oct 2027 (expected)",
+    date: "2023 to Oct 2027 (expected)",
   },
   {
     school: "Bucal National Integrated School",
-    degree: "TVL – ICT – Animation",
+    degree: "TVL ICT Animation",
     date: "Finished 2023",
   },
 ] as const;

@@ -5,10 +5,16 @@ import { FileText, Mail } from "lucide-react";
 import HeroTerminal from "@/components/HeroTerminal";
 import { useResume } from "@/components/ResumeModalHost";
 import TiltCard from "@/components/TiltCard";
+import { Tip } from "@/components/ui/tooltip";
 import { SITE } from "@/data/resume";
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
+/**
+ * GitHub layout, bamboo skin: two-column hero, text left + terminal right,
+ * role badge, scroll cue, staggered entrance. The CTA buttons are wrapped in
+ * tooltips (Tip) without moving anything.
+ */
 export default function Hero() {
   const reduce = useReducedMotion();
   const { open } = useResume();
@@ -24,23 +30,23 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-svh flex items-center pt-24 pb-14 px-4 overflow-hidden">
-      {/* Ambient background: grid + aurora glows + moving beam */}
-      <div aria-hidden className="absolute inset-0 bg-grid" />
+      {/* Ambient background: aurora washes in the site palette (no grid: the
+          bamboo world uses washes, not blueprint lines) */}
       <div
         aria-hidden
-        className="absolute -top-40 -left-40 w-[560px] h-[560px] rounded-full bg-cyan-500/15 dark:bg-cyan-500/10 blur-3xl animate-float-slow pointer-events-none"
+        className="absolute -top-40 -left-40 w-[560px] h-[560px] rounded-full bg-bamboo-500/15 dark:bg-bamboo-500/10 blur-3xl animate-float-slow pointer-events-none"
       />
       <div
         aria-hidden
-        className="absolute -bottom-48 -right-32 w-[520px] h-[520px] rounded-full bg-bamboo-500/15 dark:bg-bamboo-500/10 blur-3xl animate-float pointer-events-none"
+        className="absolute -bottom-48 -right-32 w-[520px] h-[520px] rounded-full bg-bamboo-600/10 dark:bg-bamboo-400/10 blur-3xl animate-float pointer-events-none"
       />
       <div
         aria-hidden
-        className="absolute top-1/3 -right-20 w-[380px] h-[380px] rounded-full bg-fuchsia-500/8 dark:bg-fuchsia-500/[0.06] blur-3xl animate-float-slow pointer-events-none"
+        className="absolute top-1/3 -right-20 w-[380px] h-[380px] rounded-full bg-benchmark/10 dark:bg-benchmark/[0.06] blur-3xl animate-float-slow pointer-events-none"
       />
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-50 dark:from-slate-950 to-transparent pointer-events-none"
+        className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-paper-light dark:from-paper-dark to-transparent pointer-events-none"
       />
 
       <div className="relative max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
@@ -50,11 +56,11 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             custom={0}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-700 dark:text-cyan-300 text-xs font-bold uppercase tracking-[0.15em]"
+            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-bamboo-500/10 border border-bamboo-500/20 text-bamboo-700 dark:text-bamboo-400 text-xs font-bold uppercase tracking-[0.15em]"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-bamboo-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-bamboo-500" />
             </span>
             {SITE.role}
           </motion.span>
@@ -64,11 +70,11 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             custom={0.08}
-            className="font-display text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-[0.95] text-slate-900 dark:text-white"
+            className="font-display text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter leading-[0.95] text-ink dark:text-ink-light"
           >
             Building systems
             <br />
-            that <span className="text-cyan-500">serve people</span>.
+            that <span className="text-bamboo-600 dark:text-bamboo-400">serve people</span>.
           </motion.h1>
 
           <motion.p
@@ -76,7 +82,7 @@ export default function Hero() {
             initial="hidden"
             animate="show"
             custom={0.16}
-            className="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl"
+            className="text-lg md:text-xl text-ink-soft dark:text-ink-faint leading-relaxed max-w-xl"
           >
             I&apos;m {SITE.name}, a Computer Science student in {SITE.location} building real
             systems for real users. A PyPI optimization package, an on-device AI gallery for
@@ -90,26 +96,30 @@ export default function Hero() {
             custom={0.24}
             className="flex flex-wrap gap-3"
           >
-            <motion.button
-              onClick={open}
-              whileHover={reduce ? undefined : { scale: 1.04, y: -2 }}
-              whileTap={reduce ? undefined : { scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 320, damping: 18 }}
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-sm hover:bg-cyan-600 dark:hover:bg-cyan-400 hover:text-white dark:hover:text-slate-950 transition-colors shadow-lg shadow-slate-900/10 dark:shadow-black/30"
-            >
-              <FileText size={17} />
-              View Résumé
-            </motion.button>
-            <motion.a
-              href={`mailto:${SITE.email}`}
-              whileHover={reduce ? undefined : { scale: 1.04, y: -2 }}
-              whileTap={reduce ? undefined : { scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 320, damping: 18 }}
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold text-sm hover:border-cyan-500 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
-            >
-              <Mail size={17} />
-              Get in Touch
-            </motion.a>
+            <Tip label="Opens the full résumé, printable to PDF">
+              <motion.button
+                onClick={open}
+                whileHover={reduce ? undefined : { scale: 1.04, y: -2 }}
+                whileTap={reduce ? undefined : { scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 320, damping: 18 }}
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-ink dark:bg-ink-light text-paper-light dark:text-paper-dark font-bold text-sm hover:bg-bamboo-600 dark:hover:bg-bamboo-400 dark:hover:text-ink transition-colors shadow-lg shadow-ink/10 dark:shadow-black/30"
+              >
+                <FileText size={17} aria-hidden />
+                View Résumé
+              </motion.button>
+            </Tip>
+            <Tip label="Opens your email app, every message gets a reply">
+              <motion.a
+                href={`mailto:${SITE.email}`}
+                whileHover={reduce ? undefined : { scale: 1.04, y: -2 }}
+                whileTap={reduce ? undefined : { scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 320, damping: 18 }}
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl border border-ink/20 dark:border-ink-light/20 text-ink dark:text-ink-light font-bold text-sm hover:border-bamboo-600 hover:text-bamboo-600 dark:hover:text-bamboo-400 dark:hover:border-bamboo-400 transition-colors"
+              >
+                <Mail size={17} aria-hidden />
+                Get in Touch
+              </motion.a>
+            </Tip>
           </motion.div>
         </div>
 
@@ -118,20 +128,6 @@ export default function Hero() {
             <HeroTerminal />
           </TiltCard>
         </div>
-      </div>
-
-      <div
-        aria-hidden
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-slate-400"
-      >
-        <span className="font-mono text-[10px] uppercase tracking-[0.25em]">
-          Scroll to explore
-        </span>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-slate-400 to-transparent"
-        />
       </div>
     </section>
   );

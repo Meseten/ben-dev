@@ -4,10 +4,13 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
+// Unbounded is display-only and the site uses 600 to 800. Dropping the unused
+// 400 and 500 weights keeps the display font file small (performance budget,
+// fonts under 100 KB).
 const unbounded = Unbounded({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["600", "700", "800"],
 });
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
@@ -68,12 +71,17 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  // Google Search Console: same token as public/googled55be5cefd863b9f.html,
+  // served as a meta tag too so both verification methods work.
+  verification: {
+    google: "googled55be5cefd863b9f",
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+    { media: "(prefers-color-scheme: light)", color: "#FAF7EF" },
+    { media: "(prefers-color-scheme: dark)", color: "#0C130D" },
   ],
 };
 
@@ -92,7 +100,7 @@ const jsonLd = {
   },
   alumniOf: {
     "@type": "CollegeOrUniversity",
-    name: "Cavite State University – Naic",
+    name: "Cavite State University Naic",
   },
   knowsAbout: [
     "Full Stack Development",
@@ -125,7 +133,7 @@ export default function RootLayout({
       <body className={`${manrope.variable} ${unbounded.variable} ${jetbrainsMono.variable} font-sans`}>
         <a
           href="#about"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-slate-900 focus:text-white focus:text-sm focus:font-bold"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-ink focus:text-paper-light focus:text-sm focus:font-bold"
         >
           Skip to content
         </a>

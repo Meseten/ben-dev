@@ -2,6 +2,7 @@
 
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Check, Copy, Github, Sprout, Package } from "lucide-react";
+import { Tip } from "@/components/ui/tooltip";
 import { useEffect, useRef, useState } from "react";
 import type { KrnaStats } from "@/data/stats";
 import ConvergencePlot from "./ConvergencePlot";
@@ -71,7 +72,7 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
 
   const downloadBlock = downloadLabel ? (
     <div>
-      <p className="font-mono text-[10px] uppercase tracking-wider text-slate-400 mb-0.5">
+      <p className="font-mono text-[10px] uppercase tracking-wider text-ink-faint mb-0.5">
         downloads
       </p>
       <p className="font-mono text-sm font-bold text-bamboo-600 dark:text-bamboo-400">
@@ -86,11 +87,11 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
       rel="noopener noreferrer"
       className="group"
     >
-      <p className="font-mono text-[10px] uppercase tracking-wider text-slate-400 mb-0.5">
+      <p className="font-mono text-[10px] uppercase tracking-wider text-ink-faint mb-0.5">
         downloads
       </p>
       <p className="font-mono text-sm font-bold text-bamboo-600 dark:text-bamboo-400 group-hover:underline">
-        live on PyPI →
+        live on PyPI
       </p>
     </a>
   );
@@ -107,7 +108,7 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
 
   return (
     <section id="krna" className="relative py-28 px-4 scroll-mt-24 overflow-hidden">
-      {/* Ambient background */}
+      {/* The motif's home turf: the rhizome spread, drawn from the algorithm */}
       <div aria-hidden className="absolute inset-0 bg-node-path" />
       <div
         aria-hidden
@@ -123,33 +124,36 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
-            <div className="inline-flex items-center gap-2 rounded-full bg-bamboo-500/10 border border-bamboo-500/30 px-4 py-1.5 mb-6">
-              <Sprout size={14} className="text-bamboo-500" />
-              <span className="text-xs font-mono font-bold tracking-wider text-bamboo-600 dark:text-bamboo-400 uppercase">
-                Open Source, live on PyPI
+            <div className="flex items-center gap-3 mb-5">
+              <span className="rhizome-node" aria-hidden />
+              <span className="text-sm font-semibold text-ink-soft dark:text-ink-faint">
+                Open source, live on PyPI
               </span>
             </div>
 
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-3">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-ink dark:text-ink-light mb-3">
               krna
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
-              <strong className="text-slate-900 dark:text-white">SKROA</strong>, the Sympodial
+            <p className="text-lg text-ink-soft dark:text-ink-faint leading-relaxed mb-8">
+              <strong className="text-ink dark:text-ink-light">SKROA</strong>, the Sympodial
               Kawayan Rhizome Optimization Algorithm. A gradient-free, swarm-style optimization
               framework inspired by how running bamboo spreads, installable with one command.
             </p>
 
-            {/* pip install */}
-            <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950 pl-4 pr-2 py-2.5 mb-8 shadow-lg max-w-sm">
+            {/* pip install: the one place a command block earns its keep, it is
+                the actual install instruction for the package */}
+            <div className="flex items-center gap-3 rounded-xl border border-ink dark:border-ink-light/30 bg-ink dark:bg-ink-carddark pl-4 pr-2 py-2.5 mb-8 shadow-lg max-w-sm">
               <span className="text-bamboo-400 font-mono text-sm select-none">$</span>
-              <code className="font-mono text-sm text-slate-200 flex-1">pip install krna</code>
+              <code className="font-mono text-sm text-ink-light flex-1">pip install krna</code>
+              <Tip label="Copy the pip install command">
               <button
                 onClick={copyPip}
                 aria-label="Copy pip install command"
-                className="p-2 rounded-lg text-slate-500 hover:text-bamboo-400 hover:bg-slate-900 transition-colors"
+                className="p-2 rounded-lg text-ink-faint hover:text-bamboo-400 hover:bg-ink-softdark transition-colors"
               >
-                {copied ? <Check size={16} className="text-bamboo-400" /> : <Copy size={16} />}
+                {copied ? <Check size={16} className="text-bamboo-400" aria-hidden /> : <Copy size={16} aria-hidden />}
               </button>
+              </Tip>
             </div>
 
             {/* Operators */}
@@ -159,10 +163,10 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
                   key={op.title}
                   className="rounded-xl border border-bamboo-500/20 bg-bamboo-500/[0.04] p-4"
                 >
-                  <h4 className="font-mono text-xs font-bold text-bamboo-600 dark:text-bamboo-400 mb-1">
+                  <h4 className="font-mono text-xs font-bold text-bamboo-700 dark:text-bamboo-400 mb-1">
                     {op.title}
                   </h4>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{op.desc}</p>
+                  <p className="text-xs text-ink-soft dark:text-ink-faint leading-relaxed">{op.desc}</p>
                 </div>
               ))}
             </div>
@@ -174,16 +178,16 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-bamboo-600 hover:bg-bamboo-500 text-white font-bold text-sm transition-colors shadow-lg shadow-bamboo-600/25"
               >
-                <Package size={17} />
+                <Package size={17} aria-hidden />
                 View on PyPI
               </a>
               <a
                 href="https://github.com/Meseten/KRNA"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold text-sm hover:border-bamboo-500 hover:text-bamboo-600 dark:hover:text-bamboo-400 transition-colors"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl border border-ink/20 dark:border-ink-light/20 text-ink dark:text-ink-light font-bold text-sm hover:border-bamboo-600 hover:text-bamboo-600 dark:hover:text-bamboo-400 dark:hover:border-bamboo-400 transition-colors"
               >
-                <Github size={17} />
+                <Github size={17} aria-hidden />
                 Source
               </a>
             </div>
@@ -196,10 +200,10 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
-            <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur p-6 md:p-8 shadow-2xl shadow-bamboo-900/10">
+            <div className="rounded-3xl border border-ink/10 dark:border-ink-light/10 bg-white/90 dark:bg-ink-card/90 backdrop-blur p-6 md:p-8 shadow-2xl shadow-bamboo-900/10">
               <div className="flex items-start justify-between gap-4 mb-6">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-1">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint mb-1">
                     pypi.org/project/krna
                     {stats.live && (
                       <span className="ml-2 inline-flex items-center gap-1 text-bamboo-600 dark:text-bamboo-400">
@@ -211,21 +215,21 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
                       </span>
                     )}
                   </p>
-                  <h3 className="font-display text-2xl font-bold text-slate-900 dark:text-white">
+                  <h3 className="font-display text-2xl font-bold text-ink dark:text-ink-light">
                     krna <span className="text-bamboo-500">v{stats.version}</span>
                   </h3>
                 </div>
                 <div className="relative flex items-center justify-center">
                   <span aria-hidden className="pulse-ring absolute inset-0 rounded-full" />
                   <span className="w-11 h-11 rounded-full bg-bamboo-500/15 border border-bamboo-500/30 flex items-center justify-center">
-                    <Sprout size={20} className="text-bamboo-500" />
+                    <Sprout size={20} className="text-bamboo-600 dark:text-bamboo-400" aria-hidden />
                   </span>
                 </div>
               </div>
 
               <ConvergencePlot />
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-ink/10 dark:border-ink-light/10">
                 {downloadBlock}
                 {[
                   { label: "license", value: "MIT" },
@@ -233,10 +237,10 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
                   { label: "dependencies", value: "NumPy" },
                 ].map((s) => (
                   <div key={s.label}>
-                    <p className="font-mono text-[10px] uppercase tracking-wider text-slate-400 mb-0.5">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-ink-faint mb-0.5">
                       {s.label}
                     </p>
-                    <p className="font-mono text-sm font-bold text-slate-800 dark:text-slate-200">
+                    <p className="font-mono text-sm font-bold text-ink dark:text-ink-light">
                       {s.value}
                     </p>
                   </div>
@@ -249,12 +253,12 @@ export default function KrnaShowcase({ stats }: { stats: KrnaStats }) {
                   { value: PACKAGE_NUMBERS.operators, suffix: "", label: "search operators" },
                   { value: PACKAGE_NUMBERS.algorithms, suffix: "", label: "algorithms" },
                 ].map((s) => (
-                  <div key={s.label} className="rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 p-3 text-center">
+                  <div key={s.label} className="rounded-xl bg-bamboo-50 dark:bg-ink-softdark border border-bamboo-100 dark:border-bamboo-900 p-3 text-center">
                     <p className="font-display text-2xl font-bold text-bamboo-600 dark:text-bamboo-400">
                       <CountUp target={s.value} />
                       {s.suffix}
                     </p>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{s.label}</p>
+                    <p className="text-[10px] text-ink-soft dark:text-ink-faint mt-0.5">{s.label}</p>
                   </div>
                 ))}
               </div>

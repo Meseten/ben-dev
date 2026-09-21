@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Download, Printer, X } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { Tip } from "@/components/ui/tooltip";
 import {
   EDUCATION,
   EXPERIENCE,
@@ -10,15 +11,32 @@ import {
   SKILL_GROUPS,
   CERTIFICATIONS,
 } from "@/data/resume";
+import { ensureVisitorSessionId, trackResumeRich } from "@/lib/track-resume";
 
-/** Fire-and-forget notification to the owner. Never blocks the UI. */
-function trackResume(action: "view" | "print" | "download") {
-  fetch("/api/track-resume", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action }),
-    keepalive: true,
-  }).catch(() => {});
+/**
+ * Fire-and-forget notification to the owner. Never blocks the UI.
+ * includeResumeContent: for print/save-as-PDF we record which résumé
+ * sections were rendered, so the owner knows what was on the sheet.
+ */
+function trackResume(
+  action: "view" | "print" | "download",
+  options: { printMode?: boolean } = {},
+) {
+  const payload: Record<string, unknown> = {
+    sessionId: ensureVisitorSessionId(),
+  };
+  if (options.printMode !== undefined) payload.printMode = options.printMode;
+  if (action !== "view") {
+    // What was actually in the document being printed / saved.
+    payload.resume = {
+      education: EDUCATION.map((e) => e.school),
+      projects: PROJECTS.map((p) => p.title),
+      experience: EXPERIENCE.map((x) => x.org),
+      skillGroups: SKILL_GROUPS.map((g) => g.label),
+      certifications: CERTIFICATIONS.map((c) => c.name),
+    };
+  }
+  trackResumeRich(action, payload);
 }
 
 export default function ResumeModal({
@@ -31,9 +49,12 @@ export default function ResumeModal({
   const closeRef = useRef<HTMLButtonElement>(null);
   const reduce = useReducedMotion();
   // When the Download button already notified as "download", suppress the
-  // beforeprint notification for that same dialog so the owner gets one
-  // email, not two.
+  // beforeprint notification for that same print job so the owner gets one
+  // email, not two. Cleared on afterprint (dialog closed), not on a timer.
   const suppressPrintNotify = useRef(false);
+  // React StrictMode mounts effects twice in dev; this timestamp keeps the
+  // duplicate "view" from firing while still notifying on a genuine reopen.
+  const lastViewSentAt = useRef(0);
 
   // ESC to close + focus the close button when opened
   useEffect(() => {
@@ -43,31 +64,42 @@ export default function ResumeModal({
     };
     window.addEventListener("keydown", onKey);
     closeRef.current?.focus();
-    // Notify the owner that the résumé was opened (silent no-op without RESEND_API_KEY).
-    trackResume("view");
+    suppressPrintNotify.current = false;
+    // Notify the owner that the résumé was opened (silent no-op without
+    // RESEND_API_KEY). Debounced against StrictMode's double effect run.
+    const now = Date.now();
+    if (now - lastViewSentAt.current > 2000) {
+      lastViewSentAt.current = now;
+      trackResume("view");
+    }
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, onClose]);
 
-  // Print / save-as-PDF notification — single source of truth is the
-  // beforeprint event, so browser-menu printing is covered too.
+  // Print / save-as-PDF notification. The single source of truth is the
+  // beforeprint event, so browser-menu printing is covered too. afterprint
+  // re-arms the guard, so slow print dialogs can't leak a suppressed state.
   useEffect(() => {
     if (!isOpen) return;
     const onPrint = () => {
       if (suppressPrintNotify.current) return;
-      trackResume("print");
+      trackResume("print", { printMode: false });
+    };
+    const onAfterPrint = () => {
+      suppressPrintNotify.current = false;
     };
     window.addEventListener("beforeprint", onPrint);
-    return () => window.removeEventListener("beforeprint", onPrint);
+    window.addEventListener("afterprint", onAfterPrint);
+    return () => {
+      window.removeEventListener("beforeprint", onPrint);
+      window.removeEventListener("afterprint", onAfterPrint);
+    };
   }, [isOpen]);
 
   /** Track as a download, then open the print dialog (the save-as-PDF path). */
   const downloadPdf = () => {
-    trackResume("download");
+    trackResume("download", { printMode: true });
     suppressPrintNotify.current = true;
     window.print();
-    setTimeout(() => {
-      suppressPrintNotify.current = false;
-    }, 1000);
   };
 
   if (!isOpen) return null;
@@ -93,14 +125,15 @@ export default function ResumeModal({
       >
         {/* Sticky toolbar */}
         <div className="sticky top-0 z-50 flex items-center justify-end gap-2 px-4 py-3 bg-white/90 backdrop-blur border-b border-slate-200 print:hidden">
-          <button
-            onClick={downloadPdf}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-300 text-slate-700 text-sm font-semibold hover:bg-slate-100 transition-colors"
-            title="Opens the print dialog — choose 'Save as PDF' as the destination"
-          >
-            <Download size={16} />
-            Download PDF
-          </button>
+          <Tip label="Opens the print dialog, choose 'Save as PDF' as the destination" side="bottom">
+            <button
+              onClick={downloadPdf}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-300 text-slate-700 text-sm font-semibold hover:bg-slate-100 transition-colors"
+            >
+              <Download size={16} />
+              Download PDF
+            </button>
+          </Tip>
           <button
             onClick={() => window.print()}
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:bg-slate-700 transition-colors"

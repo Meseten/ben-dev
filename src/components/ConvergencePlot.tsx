@@ -104,7 +104,7 @@ const bandPath = (b: { upper: number[]; lower: number[] }) =>
 const STATS = [
   { label: "Wilcoxon p", value: "5.97e-09" },
   { label: "effect size r", value: "0.75" },
-  { label: "trials", value: "30 × seeds 1000–1029" },
+  { label: "trials", value: "30 trials, seeds 1000 to 1029" },
   { label: "verdict", value: "PSO significantly better (α=0.05)" },
 ] as const;
 
@@ -123,20 +123,20 @@ export default function ConvergencePlot() {
       >
         <defs>
           <linearGradient id="krnaFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#16A34A" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="#16A34A" stopOpacity="0.02" />
+            <stop offset="0%" stopColor="#3F7D2E" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#3F7D2E" stopOpacity="0.02" />
           </linearGradient>
           <linearGradient id="psoFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.14" />
-            <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.02" />
+            <stop offset="0%" stopColor="#C97A1B" stopOpacity="0.14" />
+            <stop offset="100%" stopColor="#C97A1B" stopOpacity="0.02" />
           </linearGradient>
         </defs>
 
         {/* Horizontal log-scale gridlines */}
         {Y_TICKS.map((v) => (
           <g key={v}>
-            <line x1={PAD_L} y1={y(v)} x2={W - PAD_R} y2={y(v)} stroke="rgba(148,163,184,0.25)" strokeWidth="1" strokeDasharray="4 4" />
-            <text x={PAD_L - 8} y={y(v) + 4} textAnchor="end" fontSize="10" fill="#94a3b8" fontFamily="var(--font-mono)">
+            <line x1={PAD_L} y1={y(v)} x2={W - PAD_R} y2={y(v)} stroke="rgba(107,117,95,0.3)" strokeWidth="1" strokeDasharray="4 4" />
+            <text x={PAD_L - 8} y={y(v) + 4} textAnchor="end" fontSize="10" fill="#6B755F" fontFamily="var(--font-mono)">
               {v}
             </text>
           </g>
@@ -146,7 +146,7 @@ export default function ConvergencePlot() {
           y={PAD_T + 8}
           textAnchor="end"
           fontSize="9"
-          fill="#64748b"
+          fill="#46523F"
           fontFamily="var(--font-mono)"
         >
           log
@@ -155,13 +155,13 @@ export default function ConvergencePlot() {
         {/* X axis ticks */}
         {X_TICKS.map((t) => (
           <g key={t}>
-            <line x1={x(t)} y1={PAD_T + PLOT_H} x2={x(t)} y2={PAD_T + PLOT_H + 4} stroke="rgba(148,163,184,0.5)" />
+            <line x1={x(t)} y1={PAD_T + PLOT_H} x2={x(t)} y2={PAD_T + PLOT_H + 4} stroke="rgba(107,117,95,0.5)" />
             <text
               x={x(t)}
               y={PAD_T + PLOT_H + 15}
               textAnchor="middle"
               fontSize="10"
-              fill="#94a3b8"
+              fill="#6B755F"
               fontFamily="var(--font-mono)"
             >
               {t}
@@ -173,7 +173,7 @@ export default function ConvergencePlot() {
           y={H - 2}
           textAnchor="middle"
           fontSize="9"
-          fill="#64748b"
+          fill="#46523F"
           fontFamily="var(--font-mono)"
         >
           iteration
@@ -195,7 +195,7 @@ export default function ConvergencePlot() {
             <motion.path
               d={psoPath}
               fill="none"
-              stroke="#F59E0B"
+              stroke="#C97A1B"
               strokeWidth="2"
               strokeDasharray="7 4"
               strokeLinecap="round"
@@ -216,7 +216,7 @@ export default function ConvergencePlot() {
             <motion.path
               d={skroaPath}
               fill="none"
-              stroke="#16A34A"
+              stroke="#3F7D2E"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -230,15 +230,15 @@ export default function ConvergencePlot() {
               animate={{ opacity: 1 }}
               transition={{ delay: reduce ? 0 : 1.9 }}
             >
-              <circle cx={x(500)} cy={y(PSO_MEAN)} r="4" fill="#F59E0B" />
-              <circle cx={x(500)} cy={y(SKROA_MEAN)} r="4.5" fill="#16A34A" />
+              <circle cx={x(500)} cy={y(PSO_MEAN)} r="4" fill="#C97A1B" />
+              <circle cx={x(500)} cy={y(SKROA_MEAN)} r="4.5" fill="#3F7D2E" />
               <text
                 x={x(500) - 10}
                 y={y(PSO_MEAN) - 8}
                 textAnchor="end"
                 fontSize="10"
                 fontWeight="bold"
-                fill="#d97706"
+                fill="#A8640F"
                 fontFamily="var(--font-mono)"
               >
                 PSO 7.37 ± 2.97
@@ -249,7 +249,7 @@ export default function ConvergencePlot() {
                 textAnchor="end"
                 fontSize="10"
                 fontWeight="bold"
-                fill="#16A34A"
+                fill="#2F6122"
                 fontFamily="var(--font-mono)"
               >
                 SKROA 14.20 ± 3.01
@@ -264,15 +264,15 @@ export default function ConvergencePlot() {
         {STATS.map((s) => (
           <span
             key={s.label}
-            className="inline-flex items-baseline gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 px-2 py-1"
+            className="inline-flex items-baseline gap-1.5 rounded-lg bg-bamboo-50 dark:bg-ink-softdark border border-bamboo-100 dark:border-bamboo-900 px-2 py-1"
           >
-            <span className="font-mono text-[9px] uppercase tracking-wider text-slate-400">{s.label}</span>
-            <span className="font-mono text-[10px] font-bold text-slate-700 dark:text-slate-200">{s.value}</span>
+            <span className="font-mono text-[9px] uppercase tracking-wider text-ink-faint">{s.label}</span>
+            <span className="font-mono text-[10px] font-bold text-ink dark:text-ink-light">{s.value}</span>
           </span>
         ))}
       </div>
 
-      <p className="mt-2 text-[11px] font-mono text-slate-400 leading-relaxed">
+      <p className="mt-2 text-[11px] font-mono text-ink-faint leading-relaxed">
         Rastrigin, D=10, 50 agents, 500 iterations, identical budgets. Published 30-trial means
         from <span className="text-bamboo-600 dark:text-bamboo-400">krna benchmark --trials 30</span>;
         log scale; ±1 std dev bands. Per-iteration curves are representative traces through the

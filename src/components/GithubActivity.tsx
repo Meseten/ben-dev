@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const LEVEL_FILL = [
-  "bg-slate-200 dark:bg-slate-800",
+  "bg-bamboo-100 dark:bg-ink-softdark",
   "bg-bamboo-300/50 dark:bg-bamboo-700/50",
   "bg-bamboo-400/70 dark:bg-bamboo-600/70",
   "bg-bamboo-500 dark:bg-bamboo-500/90",
@@ -35,12 +35,12 @@ function Cell({ day, index }: { day: GhDay; index: number }) {
         className={cn(
           "block w-[11px] h-[11px] rounded-[3px] transition-shadow",
           LEVEL_FILL[day.level],
-          hovered && "ring-2 ring-cyan-400/70"
+          hovered && "ring-2 ring-bamboo-400/70"
         )}
         title={label}
       />
       {hovered && (
-        <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 whitespace-nowrap rounded-lg bg-slate-900 dark:bg-slate-700 px-2 py-1 text-[10px] font-mono text-white shadow-lg z-20">
+        <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 whitespace-nowrap rounded-lg bg-ink dark:bg-ink-light px-2 py-1 text-[10px] font-mono text-paper-light shadow-lg z-20">
           {label}
         </span>
       )}
@@ -70,7 +70,7 @@ function YearGrid({ weeks }: { weeks: Activity["years"][number]["weeks"] }) {
           {monthLabels.map((m) => (
             <span
               key={`${m.name}-${m.col}`}
-              className="absolute font-mono text-[9px] uppercase tracking-wider text-slate-400"
+              className="absolute font-mono text-[9px] uppercase tracking-wider text-ink-faint"
               style={{ left: `${m.col * 13}px` }}
             >
               {m.name}
@@ -113,7 +113,7 @@ export default function GithubActivity({ activity }: { activity: Activity }) {
 
   if (years.length === 0) {
     return (
-      <p className="text-sm text-slate-500 dark:text-slate-400">
+      <p className="text-sm text-ink-soft dark:text-ink-faint">
         Contribution data is unavailable right now. It will appear again on the next refresh.
       </p>
     );
@@ -130,8 +130,8 @@ export default function GithubActivity({ activity }: { activity: Activity }) {
           className={cn(
             "px-3 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border transition-colors",
             selected === "all"
-              ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white"
-              : "bg-white/70 dark:bg-slate-900/60 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-cyan-500/50"
+              ? "bg-ink dark:bg-ink-light text-paper-light dark:text-paper-dark border-ink dark:border-ink-light"
+              : "bg-white/70 dark:bg-ink-card/60 text-ink-soft dark:text-ink-faint border-ink/10 dark:border-ink-light/10 hover:border-bamboo-500/50"
           )}
         >
           All time
@@ -145,8 +145,8 @@ export default function GithubActivity({ activity }: { activity: Activity }) {
             className={cn(
               "px-3 py-1.5 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border transition-colors",
               selected === String(y.year)
-                ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-slate-900 dark:border-white"
-                : "bg-white/70 dark:bg-slate-900/60 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-cyan-500/50"
+                ? "bg-ink dark:bg-ink-light text-paper-light dark:text-paper-dark border-ink dark:border-ink-light"
+                : "bg-white/70 dark:bg-ink-card/60 text-ink-soft dark:text-ink-faint border-ink/10 dark:border-ink-light/10 hover:border-bamboo-500/50"
             )}
           >
             {y.year}
@@ -157,17 +157,17 @@ export default function GithubActivity({ activity }: { activity: Activity }) {
       <YearGrid weeks={current.weeks} />
 
       <div className="flex items-center justify-between mt-4 flex-wrap gap-3">
-        <p className="text-sm text-slate-500 dark:text-slate-400">
+        <p className="text-sm text-ink-soft dark:text-ink-faint">
           {selected === "all" ? (
             <>
-              <strong className="font-display font-bold text-slate-900 dark:text-white">
+              <strong className="font-display font-bold text-ink dark:text-ink-light">
                 {activity.totalAll.toLocaleString()}
               </strong>{" "}
               contributions since {years[years.length - 1].year}
             </>
           ) : (
             <>
-              <strong className="font-display font-bold text-slate-900 dark:text-white">
+              <strong className="font-display font-bold text-ink dark:text-ink-light">
                 {current.total.toLocaleString()}
               </strong>{" "}
               contributions in {current.year}
@@ -184,11 +184,11 @@ export default function GithubActivity({ activity }: { activity: Activity }) {
           )}
         </p>
         <div className="flex items-center gap-1.5" aria-hidden>
-          <span className="font-mono text-[10px] text-slate-400 mr-1">Less</span>
+          <span className="font-mono text-[10px] text-ink-faint mr-1">Less</span>
           {LEVEL_FILL.map((fill, i) => (
             <span key={i} className={cn("w-[10px] h-[10px] rounded-[3px]", fill)} />
           ))}
-          <span className="font-mono text-[10px] text-slate-400 ml-1">More</span>
+          <span className="font-mono text-[10px] text-ink-faint ml-1">More</span>
         </div>
       </div>
     </div>

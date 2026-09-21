@@ -2,50 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design tokens live in tailwind.config.ts (paper/ink/bamboo/benchmark), the
+   palette and reasons are documented in DESIGN.md. */
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71% 4%;
+    --background: 44 44% 96%;
+    --foreground: 120 14% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
+    --card-foreground: 120 14% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
-    --primary: 224 71% 4%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 224 71% 4%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 224 71% 4%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 199 89% 48%;
+    --popover-foreground: 120 14% 12%;
+    --primary: 96 45% 34%;
+    --primary-foreground: 44 44% 96%;
+    --secondary: 60 18% 90%;
+    --secondary-foreground: 120 14% 12%;
+    --muted: 60 18% 90%;
+    --muted-foreground: 96 8% 34%;
+    --accent: 96 45% 34%;
+    --accent-foreground: 44 44% 96%;
+    --destructive: 0 72% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 70 22% 84%;
+    --input: 70 22% 84%;
+    --ring: 96 45% 34%;
     --radius: 0.75rem;
+    /* Secondary text tones, theme-aware for WCAG AA (4.5:1) in both modes */
+    --ink-soft: #46523F;
+    --ink-faint: #6B755F;
   }
 
   .dark {
-    --background: 222 47% 3%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 5%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 5%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222 47% 3%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 199 89% 48%;
+    --background: 120 29% 6%;
+    --foreground: 100 22% 93%;
+    --card: 120 26% 9%;
+    --card-foreground: 100 22% 93%;
+    --popover: 120 26% 9%;
+    --popover-foreground: 100 22% 93%;
+    --primary: 96 45% 60%;
+    --primary-foreground: 120 29% 7%;
+    --secondary: 120 15% 15%;
+    --secondary-foreground: 100 22% 93%;
+    --muted: 120 15% 15%;
+    --muted-foreground: 100 8% 68%;
+    --accent: 96 45% 60%;
+    --accent-foreground: 120 29% 7%;
+    --destructive: 0 60% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 120 14% 18%;
+    --input: 120 14% 18%;
+    --ring: 96 45% 60%;
+    /* Lighter secondary tones on dark ground: #A9B8A0 ≈ 8.2:1, #98A88F ≈ 7.5:1 */
+    --ink-soft: #A9B8A0;
+    --ink-faint: #98A88F;
   }
 }
 
@@ -54,13 +63,23 @@
     scroll-behavior: smooth;
   }
 
-  body {
-    @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50 antialiased selection:bg-cyan-500/25 overflow-x-hidden;
+  /* View Transitions: same-origin page changes cross-fade in supporting
+     browsers, everyone else gets the normal instant navigation. */
+  @view-transition {
+    navigation: auto;
   }
 
-  /* Visible keyboard focus everywhere */
+  body {
+    @apply bg-paper-light text-ink dark:bg-paper-dark dark:text-ink-light antialiased overflow-x-hidden;
+  }
+
+  ::selection {
+    @apply bg-bamboo-500/25;
+  }
+
+  /* Visible keyboard focus everywhere (antislop R-32) */
   :focus-visible {
-    @apply outline-none ring-2 ring-cyan-500/70 ring-offset-2 ring-offset-slate-50 dark:ring-offset-slate-950 rounded-md;
+    @apply outline-none ring-2 ring-bamboo-600/80 ring-offset-2 ring-offset-paper-light dark:ring-bamboo-400 dark:ring-offset-paper-dark rounded-md;
   }
 
   ::-webkit-scrollbar {
@@ -70,7 +89,7 @@
     @apply bg-transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-300 dark:bg-slate-700 rounded-full border-4 border-transparent bg-clip-content hover:bg-slate-400 dark:hover:bg-slate-600;
+    @apply bg-bamboo-200 dark:bg-ink-softdark rounded-full border-4 border-transparent bg-clip-content hover:bg-bamboo-300 dark:hover:bg-bamboo-800;
   }
 }
 
@@ -84,81 +103,233 @@
   }
 }
 
-/* Subtle grain overlay for texture */
+/* ===== Identity motif: the rhizome node ================================
+   A filled dot with a soft outer ring. Marks real things in Ben's work:
+   timeline entries, plot endpoints, live status. One gesture, one meaning. */
+.rhizome-node {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: theme("colors.bamboo.600");
+}
+.rhizome-node::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  border: 1px solid theme("colors.bamboo.600 / 35%");
+}
+.dark .rhizome-node {
+  background: theme("colors.bamboo.400");
+}
+.dark .rhizome-node::before {
+  border-color: theme("colors.bamboo.400 / 35%");
+}
+
+/* Grain overlay: warm-paper texture, fixed so it never repaints on scroll */
 .grain-overlay {
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: 5;
-  opacity: 0.025;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .dark .grain-overlay {
   opacity: 0.05;
 }
 
-/* ===== Ambient backgrounds ===== */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, rgba(100, 116, 139, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(100, 116, 139, 0.07) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-.dark .bg-grid {
-  background-image:
-    linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
-}
-
-.bg-dots {
-  background-image: radial-gradient(rgba(100, 116, 139, 0.14) 1px, transparent 1px);
-  background-size: 22px 22px;
-}
-.dark .bg-dots {
-  background-image: radial-gradient(rgba(148, 163, 184, 0.09) 1px, transparent 1px);
-}
-
-.bg-node-path {
-  background-image:
-    linear-gradient(to right, rgba(16, 163, 74, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(16, 163, 74, 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
-  mask-image: radial-gradient(ellipse 75% 60% at 50% 40%, black 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 75% 60% at 50% 40%, black 30%, transparent 75%);
-}
-.dark .bg-node-path {
-  background-image:
-    linear-gradient(to right, rgba(52, 214, 125, 0.12) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(52, 214, 125, 0.12) 1px, transparent 1px);
-}
-
-/* Global aurora wash: fixed, behind all content, reacts to theme */
+/* Accent aurora washes, fixed behind all content, mirrored left and right so
+   the ground itself is symmetric. They breathe on a slow transform-only loop,
+   which gives light mode its own presence alongside the stronger paper tone
+   and band tints. */
 .aurora-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(52rem 30rem at 8% -6%, rgba(34, 211, 238, 0.1), transparent 60%),
-    radial-gradient(46rem 28rem at 96% 12%, rgba(22, 163, 74, 0.09), transparent 62%),
-    radial-gradient(40rem 26rem at 50% 108%, rgba(99, 102, 241, 0.07), transparent 65%);
+    radial-gradient(46rem 30rem at 12% -6%, rgba(90, 166, 73, 0.16), transparent 62%),
+    radial-gradient(46rem 30rem at 88% -6%, rgba(90, 166, 73, 0.16), transparent 62%),
+    radial-gradient(40rem 26rem at 50% 110%, rgba(63, 125, 46, 0.1), transparent 65%);
 }
 .dark .aurora-bg {
   background:
-    radial-gradient(52rem 30rem at 8% -6%, rgba(34, 211, 238, 0.07), transparent 60%),
-    radial-gradient(46rem 28rem at 96% 12%, rgba(22, 163, 74, 0.07), transparent 62%),
-    radial-gradient(40rem 26rem at 50% 108%, rgba(99, 102, 241, 0.06), transparent 65%);
+    radial-gradient(46rem 30rem at 12% -6%, rgba(123, 201, 106, 0.07), transparent 62%),
+    radial-gradient(46rem 30rem at 88% -6%, rgba(123, 201, 106, 0.07), transparent 62%),
+    radial-gradient(40rem 26rem at 50% 110%, rgba(90, 166, 73, 0.05), transparent 65%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .aurora-bg {
+    animation: aurora-breathe 18s ease-in-out infinite;
+  }
+}
+@keyframes aurora-breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.85;
+  }
 }
 
-/* Beam divider: a light streak that sweeps across horizontal rules */
+/* Alternating section band tints. Light mode gets bamboo-tinted bands so the
+   theme visibly differs from plain white; dark mode shifts surface depth. */
+.band-tint {
+  background: linear-gradient(180deg, rgba(226, 238, 208, 0.55), rgba(250, 247, 239, 0));
+}
+.dark .band-tint {
+  background: linear-gradient(180deg, rgba(19, 28, 18, 0.9), rgba(12, 19, 13, 0));
+}
+
+/* Native CSS scroll progress bar, zero JS where supported. Framer Motion
+   bar remains the fallback via the ScrollProgress component. */
+@keyframes grow-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  height: 3px;
+  z-index: 60;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, #3f7d2e, #5aa649, #7bc96a);
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-progress {
+      animation: grow-progress auto linear;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+/* View-transition shared elements: project titles morph between the grid and
+   the case-study page when both sides opt in. */
+.vt-project-title {
+  view-transition-name: var(--vt-name, none);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.28s;
+}
+
+/* Project card entrance. On first paint it reads as a soft fade-up; after a
+   filter swap inside a View Transition the incoming grid re-runs it, which
+   gives the morph its stagger. Reduced motion renders instantly. */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.card-enter {
+  animation: card-in 0.45s cubic-bezier(0.21, 0.47, 0.32, 0.98) both;
+}
+.card-enter:nth-child(2) { animation-delay: 40ms; }
+.card-enter:nth-child(3) { animation-delay: 80ms; }
+.card-enter:nth-child(4) { animation-delay: 120ms; }
+.card-enter:nth-child(5) { animation-delay: 160ms; }
+.card-enter:nth-child(6) { animation-delay: 200ms; }
+.card-enter:nth-child(7) { animation-delay: 240ms; }
+.card-enter:nth-child(8) { animation-delay: 280ms; }
+.card-enter:nth-child(9) { animation-delay: 320ms; }
+@media (prefers-reduced-motion: reduce) {
+  .card-enter {
+    animation: none;
+  }
+}
+
+/* Experience spine: the rhizome grows as you scroll through the roles.
+   CSS scroll-driven where supported, the full line for everyone else. */
+@keyframes spine-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.timeline-spine {
+  transform-origin: top;
+  transform: scaleY(1);
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .timeline-spine {
+      animation: spine-grow linear;
+      animation-timeline: view();
+      animation-range: entry 0% exit 90%;
+    }
+  }
+}
+
+/* Hero breathing glow. The keyframes carry the centering translate so the
+   animation and the layout class never fight over the transform property. */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.08);
+    opacity: 0.8;
+  }
+}
+.animate-breathe {
+  animation: breathe 9s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-breathe {
+    animation: none;
+  }
+}
+
+/* The krna section's home turf: a masked node field, the rhizome spread drawn
+   from the algorithm itself. Used only here and on case-study headers. */
+.bg-node-path {
+  background-image:
+    linear-gradient(to right, rgba(63, 125, 46, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(63, 125, 46, 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 75% 60% at 50% 40%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 60% at 50% 40%, black 30%, transparent 75%);
+}
+.dark .bg-node-path {
+  background-image:
+    linear-gradient(to right, rgba(123, 201, 106, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(123, 201, 106, 0.07) 1px, transparent 1px);
+}
+
+/* Section divider: a hairline with one slow accent runner, the rhizome
+   traveling underground between sections. */
 .beam-divider {
   position: relative;
   height: 1px;
   overflow: hidden;
-  background: rgba(100, 116, 139, 0.18);
+  background: rgba(70, 82, 63, 0.2);
 }
 .dark .beam-divider {
-  background: rgba(148, 163, 184, 0.12);
+  background: rgba(123, 201, 106, 0.12);
 }
 .beam-divider::after {
   content: "";
@@ -167,8 +338,8 @@
   left: -40%;
   width: 40%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.7), transparent);
-  animation: beam-sweep 4.5s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(90, 166, 73, 0.8), transparent);
+  animation: beam-sweep 5.5s ease-in-out infinite;
 }
 @keyframes beam-sweep {
   0% {
@@ -185,7 +356,7 @@
   }
 }
 
-/* Skills ticker: slow drift, pauses on hover, disabled for reduced motion */
+/* Skills ticker: slow drift, frozen layout on hover, disabled for reduced motion */
 @keyframes marquee-scroll {
   from {
     transform: translateX(0);
@@ -211,7 +382,7 @@
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  border: 1px solid rgba(22, 163, 74, 0.35);
+  border: 1px solid rgba(63, 125, 46, 0.35);
   animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 .pulse-ring::after {

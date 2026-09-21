@@ -16,7 +16,7 @@ export default function SkillMarquee() {
 
   return (
     <div
-      className="relative flex overflow-hidden bg-slate-900 dark:bg-black rounded-3xl border border-slate-800 py-6 select-none"
+      className="relative flex overflow-hidden bg-ink dark:bg-ink-carddark rounded-3xl border border-ink dark:border-ink-light/20 py-6 select-none"
       aria-label="Skills and interests"
       onMouseEnter={() => {
         setPaused(true);
@@ -29,11 +29,11 @@ export default function SkillMarquee() {
     >
       <div
         aria-hidden
-        className="absolute left-0 w-24 h-full bg-gradient-to-r from-slate-900 dark:from-black to-transparent z-10"
+        className="absolute left-0 w-24 h-full bg-gradient-to-r from-ink dark:from-ink-carddark to-transparent z-10"
       />
       <div
         aria-hidden
-        className="absolute right-0 w-24 h-full bg-gradient-to-l from-slate-900 dark:from-black to-transparent z-10"
+        className="absolute right-0 w-24 h-full bg-gradient-to-l from-ink dark:from-ink-carddark to-transparent z-10"
       />
 
       {paused ? (
@@ -42,7 +42,7 @@ export default function SkillMarquee() {
           {items.map((s, i) => (
             <span
               key={`${s}-${i}`}
-              className="font-mono text-sm md:text-base font-bold text-slate-400 hover:text-cyan-400 transition-colors"
+              className="font-mono text-sm md:text-base font-bold text-ink-faint hover:text-bamboo-400 transition-colors"
             >
               {s}
             </span>
@@ -56,7 +56,7 @@ export default function SkillMarquee() {
           {[...items, ...items].map((skill, i) => (
             <span
               key={`${skill}-${i}`}
-              className="font-mono text-sm md:text-base font-bold text-slate-400 hover:text-cyan-400 transition-colors"
+              className="font-mono text-sm md:text-base font-bold text-ink-faint hover:text-bamboo-400 transition-colors"
             >
               {skill}
             </span>

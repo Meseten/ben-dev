@@ -47,12 +47,12 @@ export default function StatsStrip() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: i * 0.08, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 backdrop-blur p-6 text-center"
+            className="rounded-2xl border border-ink/10 dark:border-ink-light/10 bg-white/70 dark:bg-ink-card/60 backdrop-blur p-6 text-center"
           >
-            <p className="font-display text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <p className="font-display text-3xl md:text-5xl font-bold tracking-tight text-ink dark:text-ink-light">
               <StatNumber target={s.value} suffix={s.suffix} />
             </p>
-            <p className="mt-2 text-xs md:text-sm text-slate-500 dark:text-slate-400 font-medium">
+            <p className="mt-2 text-xs md:text-sm text-ink-soft dark:text-ink-faint font-medium">
               {s.label}
             </p>
           </motion.div>

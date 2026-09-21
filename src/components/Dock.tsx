@@ -8,7 +8,9 @@ import {
   type MotionValue,
 } from "framer-motion";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef } from "react";
+
+import { Tip } from "@/components/ui/tooltip";
 
 export type DockEntry = {
   label: string;
@@ -27,7 +29,6 @@ function DockButton({
   mouseX: MotionValue<number>;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState(false);
 
   const distance = useTransform(mouseX, (val) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
@@ -37,32 +38,29 @@ function DockButton({
   const widthSync = useTransform(distance, [-140, 0, 140], [40, 72, 40]);
   const width = useSpring(widthSync, { mass: 0.1, stiffness: 160, damping: 12 });
 
+  // The dock hugs the top of the viewport, so its tooltips open below.
+  // Tip carries its own Radix provider and works on hover and keyboard focus.
   const inner = (
-    <motion.div
-      ref={ref}
-      style={{ width }}
-      className="relative aspect-square rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 hover:border-cyan-500/50 shadow-sm cursor-pointer transition-colors"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={entry.onClick}
-      role={entry.onClick ? "button" : undefined}
-      tabIndex={entry.onClick ? 0 : undefined}
-      onKeyDown={
-        entry.onClick
-          ? (e) => {
-              if (e.key === "Enter" || e.key === " ") entry.onClick?.();
-            }
-          : undefined
-      }
-      aria-label={entry.label}
-    >
-      {entry.icon}
-      {hovered && (
-        <span className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-900 dark:bg-slate-700 px-2.5 py-1 text-xs font-medium text-white shadow-lg z-50">
-          {entry.tooltip ?? entry.label}
-        </span>
-      )}
-    </motion.div>
+    <Tip label={entry.tooltip ?? entry.label} side="bottom">
+      <motion.div
+        ref={ref}
+        style={{ width }}
+        className="relative aspect-square rounded-2xl bg-white dark:bg-ink-softdark border border-ink/10 dark:border-ink-light/20 flex items-center justify-center text-ink-soft dark:text-ink-faint hover:text-bamboo-600 dark:hover:text-bamboo-400 hover:border-bamboo-500/50 shadow-sm cursor-pointer transition-colors"
+        onClick={entry.onClick}
+        role={entry.onClick ? "button" : undefined}
+        tabIndex={entry.onClick ? 0 : undefined}
+        onKeyDown={
+          entry.onClick
+            ? (e) => {
+                if (e.key === "Enter" || e.key === " ") entry.onClick?.();
+              }
+            : undefined
+        }
+        aria-label={entry.label}
+      >
+        {entry.icon}
+      </motion.div>
+    </Tip>
   );
 
   if (entry.href) {
@@ -97,17 +95,18 @@ export default function Dock({
     >
       <nav
         aria-label="Primary"
-        className="pointer-events-auto flex items-center gap-2 px-3 py-2 rounded-2xl bg-white/75 dark:bg-slate-900/75 backdrop-blur-xl border border-slate-200/60 dark:border-slate-700/60 shadow-lg shadow-black/5 overflow-x-auto scrollbar-hide max-w-[calc(100vw-2rem)]"
+        className="pointer-events-auto flex items-center gap-2 px-3 py-2 rounded-2xl bg-white/75 dark:bg-ink-card/75 backdrop-blur-xl border border-ink/10/60 dark:border-ink-light/20/60 shadow-lg shadow-black/5 overflow-x-auto scrollbar-hide max-w-[calc(100vw-2rem)]"
       >
-        <Link
-          href="#top"
-          className="mr-2 font-display font-bold text-base md:text-lg tracking-tighter shrink-0 h-10 flex items-center"
-          aria-label="Back to top"
-          title="Back to top"
-        >
-          ben<span className="text-fuchsia-500">4</span>
-          <span className="text-cyan-500">dev</span>
-        </Link>
+        <Tip label="Back to top" side="bottom">
+          <Link
+            href="#top"
+            className="mr-2 font-display font-bold text-base md:text-lg tracking-tighter shrink-0 h-10 flex items-center"
+            aria-label="Back to top"
+          >
+            ben<span className="text-bamboo-600 dark:text-bamboo-400">4</span>
+            <span>dev</span>
+          </Link>
+        </Tip>
         {leading && <div className="mr-1 flex items-center">{leading}</div>}
         <div className="flex items-end gap-2 h-14 pb-1">
           {items.map((item) => (

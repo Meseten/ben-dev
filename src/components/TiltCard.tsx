@@ -22,7 +22,7 @@ export default function TiltCard({ children }: { children: ReactNode }) {
   const rotateY = useTransform(sx, [0, 1], [-9, 9]);
   const glowX = useTransform(sx, [0, 1], ["20%", "80%"]);
   const glowY = useTransform(sy, [0, 1], ["20%", "80%"]);
-  const glow = useMotionTemplate`radial-gradient(340px circle at ${glowX} ${glowY}, rgba(6,182,212,0.14), transparent 70%)`;
+  const glow = useMotionTemplate`radial-gradient(340px circle at ${glowX} ${glowY}, rgba(90,166,73,0.14), transparent 70%)`;
 
   if (reduce) return <>{children}</>;
 
